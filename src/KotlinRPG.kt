@@ -4,12 +4,13 @@ fun main(args: Array<String>) {
 
     val name = readLine()!!
 
-    val initialPowerList: List<Power> = listOf(
+    val initialPowerList = mutableListOf<Power>(
         Power("Fireball", "shoots a fireball", 0, 20, 1, 1),
         Power("Poison", "creates cloud of poison that decreases the enemy's health for 3 turns", 0, 5, 2, 2)
     )
 
-    val player1 = Player(name, 5, initialPowerList, 100)
+
+    val player1 = Player(name, 5, initialPowerList, 100, 50)
 
     player1.printInformation()
     player1.printPowers()
@@ -22,15 +23,22 @@ fun main(args: Array<String>) {
 
     monsterFightLoop(player1, giantSpider)
 
-    println("You are walking through the forest, when suddenly you shop a town to your left and a cave to your right.\n" +
-            "1. Go to the town\n" +
+    println("You are walking through the forest, when suddenly you spot a market to your left and a cave to your right.\n" +
+            "1. Go to the market\n" +
             "2. Go to the cave")
 
+    val choice = readLine()?.toInt()
 
+    var shopItems = mutableListOf<Power>()
+
+    shopItems.add(Power("Magic Arrow", "shoots a magic arrow out of thin air", 25, 30, 1, 1))
+    shopItems.add(Power("Death Orb", "creates a black hole that does damage over time", 50, 15, 2, 2))
 
 
 
 }
+
+
 fun monsterFightLoop(player1: Player, monster: Monster){
     while (monster.health > 0 && player1.health > 0){
         monster.attackPlayer()
@@ -55,7 +63,7 @@ fun monsterFightLoop(player1: Player, monster: Monster){
     }
 }
 
-class Player(val name: String, var powerLevel: Int, var powerList: List<Power>, var health: Int){
+class Player(val name: String, var powerLevel: Int, var powerList: MutableList<Power>, var health: Int, var gold: Int){
 
     fun choosePower(): Power{
         println("Choose what power you would like to use:")
@@ -77,6 +85,9 @@ class Player(val name: String, var powerLevel: Int, var powerList: List<Power>, 
             println("${power.choiceNumber}. ${power.name}: ${power.description} (${power.damage})")
         }
     }
+    fun printGold(){
+        println("you have $gold gold")
+    }
 
 }
 
@@ -86,7 +97,7 @@ fun printPowerList(powerList: List<Power>){
     }
 }
 
-class Power(val name: String, val description: String, val price: Int, var damage: Int, val choiceNumber: Int, val powerType: Int){
+class Power(val name: String, val description: String, val price: Int, var damage: Int, var choiceNumber: Int, val powerType: Int){
     fun printDescriptionAndName(){
         println("$name: $description")
     }
