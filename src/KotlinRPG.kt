@@ -34,34 +34,23 @@ fun main(args: Array<String>) {
     shopItems.add(Power("Magic Arrow", "shoots a magic arrow out of thin air", 25, 30, 1, 1))
     shopItems.add(Power("Death Orb", "creates a black hole that does damage over time", 50, 15, 2, 2))
 
-    var shop = Shop(shopItems, player1)
-    shop.sellItems()
-    var purchasedPower = shopItems[choice - 1]
-    shop.addItemsToPlayerInventory(purchasedPower)
-    player1.printPowers()
-
-
-
-
-}
-class Shop(var shopItems: MutableList<Power>, var player1: Player){
-    fun sellItems(){
-        println("Choose an item you would like to purchase:")
-        for (power in shopItems){
-            println("${power.choiceNumber}. ${power.name}: ${power.description} (${power.price} gold)")
-        }
-        println("you have ${player1.gold} gold")
-    }
-
-    fun addItemsToPlayerInventory(chosenItem: Power){
-        player1.powerList.add(chosenItem)
-        player1.gold -= chosenItem.price
-        chosenItem.choiceNumber = 3
+    if (choice == 1){
+        var shop = Shop(shopItems, player1)
+        shop.sellItems()
+        var purchasedPower = shopItems[choice - 1]
+        shop.addItemsToPlayerInventory(purchasedPower)
+        player1.printPowers()
 
     }
-
+    if (choice == 2){
+        //go to cave
+        println("You enter the cave. To your right is a long corridor, seemingly going to another branch of the cave.\n" +
+                "To your left is what looks like abandoned mine shafts.\n" +
+                "Choose where you want to go\n" +
+                "1. Long corridor\n" +
+                "2. Mine shafts")
+    }
 }
-
 
 fun monsterFightLoop(player1: Player, monster: Monster){
     while (monster.health > 0 && player1.health > 0){
@@ -87,70 +76,9 @@ fun monsterFightLoop(player1: Player, monster: Monster){
     }
 }
 
-class Player(val name: String, var powerLevel: Int, var powerList: MutableList<Power>, var health: Int, var gold: Int){
-
-    fun choosePower(): Power{
-        println("Choose what power you would like to use:")
-        printPowers()
-        var choice = readLine()!!.toInt()
-
-        return powerList[choice - 1]
-    }
-
-    fun usePower(power: Power){
-        println("you have hit the monster for ${power.damage} damage")
-
-    }
-    fun printInformation(){
-        println("You are $name the adventurer. Power level: $powerLevel. Health: $health")
-    }
-    fun printPowers(){
-        for (power in powerList){
-            println("${power.choiceNumber}. ${power.name}: ${power.description} (${power.damage} damage)")
-        }
-    }
-    fun printGold(){
-        println("you have $gold gold")
-    }
-
-}
-
 fun printPowerList(powerList: List<Power>){
     for (power in powerList){
         println("${power.choiceNumber}. ${power.name}: ${power.description}")
     }
 }
 
-class Power(val name: String, val description: String, val price: Int, var damage: Int, var choiceNumber: Int, val powerType: Int){
-    fun printDescriptionAndName(){
-        println("$name: $description")
-    }
-    fun showInShop(){
-        println("this item costs $price gold pieces")
-    }
-    //powerType 1: one time attack
-    //powerType 2: damage over time
-
-
-
-}
-
-class Monster(val name: String, val attack: Int, var health: Int, val description: String, val playerFighting: Player, var isAlive: Boolean, var isPoisoned: Boolean){
-    fun printDescriptionAndName(){
-        println("$name: $description")
-    }
-    fun attackPlayer(){
-        println("the $name has attacked you. you have lost $attack health. You now have ${playerFighting.health}")
-        playerFighting.health -= attack
-    }
-    fun takePlayerAttack(attack: Int): Int{
-        println("You have hit the $name for $attack health")
-        health -= attack
-        return health
-    }
-    fun takePlayerOvertimeAttack(attack: Int): Int{
-        println("You have hit the $name for $attack health")
-        health -= attack
-        return health
-    }
-}
