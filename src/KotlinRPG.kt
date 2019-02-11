@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
             "1. Go to the market\n" +
             "2. Go to the cave")
 
-    var choice = readLine()?.toInt()
+    var choice = readLine()!!.toInt()
 
     var shopItems = mutableListOf<Power>()
 
@@ -36,8 +36,8 @@ fun main(args: Array<String>) {
 
     var shop = Shop(shopItems, player1)
     shop.sellItems()
-    choice = readLine()!!.toInt()
-    shop.addItemsToPlayerInventory(choice)
+    var purchasedPower = shopItems[choice - 1]
+    shop.addItemsToPlayerInventory(purchasedPower)
     player1.printPowers()
 
 
@@ -53,19 +53,10 @@ class Shop(var shopItems: MutableList<Power>, var player1: Player){
         println("you have ${player1.gold} gold")
     }
 
-    fun addItemsToPlayerInventory(chosenItemNum: Int){
-        if (chosenItemNum == 1){
-            player1.powerList.add(shopItems[0])
-            player1.gold -= shopItems[0].price
-            shopItems.removeAt(0)
-            shopItems[0].choiceNumber = 3 /**why this isnt working**/
-        }
-        if (chosenItemNum == 2){
-            player1.powerList.add(shopItems[1])
-            player1.gold -= shopItems[1].price
-            shopItems.removeAt(1)
-            shopItems[1].choiceNumber = 3/**why this isnt working**/
-        }
+    fun addItemsToPlayerInventory(chosenItem: Power){
+        player1.powerList.add(chosenItem)
+        player1.gold -= chosenItem.price
+        chosenItem.choiceNumber = 3
 
     }
 
@@ -115,7 +106,7 @@ class Player(val name: String, var powerLevel: Int, var powerList: MutableList<P
     }
     fun printPowers(){
         for (power in powerList){
-            println("${power.choiceNumber}. ${power.name}: ${power.description} (${power.damage})")
+            println("${power.choiceNumber}. ${power.name}: ${power.description} (${power.damage} damage)")
         }
     }
     fun printGold(){
