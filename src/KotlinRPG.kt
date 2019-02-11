@@ -27,14 +27,47 @@ fun main(args: Array<String>) {
             "1. Go to the market\n" +
             "2. Go to the cave")
 
-    val choice = readLine()?.toInt()
+    var choice = readLine()?.toInt()
 
     var shopItems = mutableListOf<Power>()
 
     shopItems.add(Power("Magic Arrow", "shoots a magic arrow out of thin air", 25, 30, 1, 1))
     shopItems.add(Power("Death Orb", "creates a black hole that does damage over time", 50, 15, 2, 2))
 
+    var shop = Shop(shopItems, player1)
+    shop.sellItems()
+    choice = readLine()!!.toInt()
+    shop.addItemsToPlayerInventory(choice)
+    player1.printPowers()
 
+
+
+
+}
+class Shop(var shopItems: MutableList<Power>, var player1: Player){
+    fun sellItems(){
+        println("Choose an item you would like to purchase:")
+        for (power in shopItems){
+            println("${power.choiceNumber}. ${power.name}: ${power.description} (${power.price} gold)")
+        }
+        println("you have ${player1.gold} gold")
+    }
+
+    fun addItemsToPlayerInventory(chosenItemNum: Int){
+        if (chosenItemNum == 1){
+            player1.powerList.add(shopItems[0])
+            player1.gold -= shopItems[0].price
+            shopItems.removeAt(0)
+            shopItems[0].choiceNumber = 3 /**why this isnt working**/
+        }
+        if (chosenItemNum == 2){
+            player1.powerList.add(shopItems[1])
+            player1.gold -= shopItems[1].price
+            shopItems.removeAt(1)
+            shopItems[1].choiceNumber = 3/**why this isnt working**/
+        }
+
+    }
 
 }
 
