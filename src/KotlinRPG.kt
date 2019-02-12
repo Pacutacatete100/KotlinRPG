@@ -49,7 +49,28 @@ fun main(args: Array<String>) {
                 "Choose where you want to go\n" +
                 "1. Long corridor\n" +
                 "2. Mine shafts")
+        choice = readLine()!!.toInt()
+        if (choice == 1){
+            longCaveCorridor(player1)
+        }else if (choice == 2){
+            mineShafts(player1)
+        }
     }
+}
+fun longCaveCorridor(player1: Player){
+    val randomNum = (1..5).random()
+    println("You got to the right, to the long long corridor. It seems to break out in $randomNum branches. \n" +
+            "Each branch has a big, dramatic entrance gate, which behind there is a different monster.\n" +
+            "Choose a door to go through")
+}
+
+fun mineShafts(player1: Player){
+    println("You go to your left to the mine shafts. You immediately smell the smell of rotting bodies, sulfur and rotting wood.\n" +
+            "You keep walking forward, and a support beam collapes infront of your feet, and on top there is a goblin, thirsty for your blood.")
+
+    var goblin = Monster("Goblin", 15, 45, "big hulking ogre armed with a rusty yet sharp dagger", player1, true, false)
+    monsterFightLoop(player1, goblin)
+
 }
 
 fun monsterFightLoop(player1: Player, monster: Monster){
