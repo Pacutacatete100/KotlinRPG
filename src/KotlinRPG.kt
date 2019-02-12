@@ -70,6 +70,7 @@ fun mineShafts(player1: Player){
 
     var goblin = Monster("Goblin", 15, 45, "big hulking ogre armed with a rusty yet sharp dagger", player1, true, false)
     monsterFightLoop(player1, goblin)
+    println("the goblin colleapses in front of you, revealing the rest of the mine shafts.")
 
 }
 
