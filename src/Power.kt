@@ -1,3 +1,4 @@
+
 class Power(val name: String, val description: String, val price: Int, var damage: Int, var choiceNumber: Int, val powerType: Int){
     fun printDescriptionAndName(){
         println("$name: $description")
