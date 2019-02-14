@@ -35,9 +35,9 @@ fun main(args: Array<String>) {
     shopItems.add(Power("Death Orb", "creates a black hole that does damage over time", 50, 15, 2, 2))
 
     if (choice == 1){
-        var shop = Shop(shopItems, player1)
+        val shop = Shop(shopItems, player1)
         shop.sellItems()
-        var purchasedPower = shopItems[choice - 1]
+        val purchasedPower = shopItems[choice - 1]
         shop.addItemsToPlayerInventory(purchasedPower)
         player1.printPowers()
 
@@ -52,9 +52,11 @@ fun main(args: Array<String>) {
         choice = readLine()!!.toInt()
         if (choice == 1){
             Story.longCaveCorridor(player1)
-        }else if (choice == 2){
+        }
+        if (choice == 2){
             Story.mineShafts(player1)
         }
+
     }
 }
 
